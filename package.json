@@ -1,35 +1,24 @@
 {
-  "name": "backend-e-commerce",
+  "name": "web_delivery_copilot",
   "version": "1.0.0",
-  "description": "Backend de un e-commerce realizado con node.js express y varios patrones de arquitectura",
-  "main": "app.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "npx artillery run test/artillery/userTest.yml",
-    "test:simple": "npx artillery run test/artillery/testprueba.yml",
-    "start": "nodemon ./src/app.js --mongo",
-    "dev:memory": "nodemon ./src/app.js --memory"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js"
   },
   "keywords": [],
-  "author": "Nicolas D. Cabrera",
+  "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "@faker-js/faker": "^9.2.0",
-    "bcrypt": "^5.1.1",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.4.1",
-    "mongoose-paginate-v2": "^1.8.3",
-    "nodemailer": "^6.9.15",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
-    "uuid": "^10.0.0"
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "mongoose": "^9.0.1",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
-    "artillery": "^1.7.8",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.11"
   }
 }
