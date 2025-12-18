@@ -1,11 +1,11 @@
 import User from '../models/userModel.js';
 
 export const home = (req, res) => {
-  res.render('index');
+  res.render('index', { title: 'Inicio' });
 };
 
 export const loginForm = (req, res) => {
-  res.render('login');
+  res.render('login', { title: 'Login' });
 };
 
 export const login = (req, res) => {
@@ -20,7 +20,7 @@ export const login = (req, res) => {
 
 // Mostrar formulario de registro
 export const registerForm = (req, res) => {
-  res.render('registro');
+  res.render('registro', { title: 'Registro' });
 };
 
 // Procesar registro

@@ -1,7 +1,10 @@
   </main>
   <footer>
-    <p>&copy; <%= new Date().getFullYear() %> Mi Plataforma. Todos los derechos reservados.</p>
+    <p>&copy; <%= new Date().getFullYear() %> Mi Plataforma</p>
   </footer>
-  <script src="/js/registro.js"></script>
+
+  <% if (title === 'Registro') { %>
+    <script src="/js/registro.js"></script>
+  <% } %>
 </body>
 </html>

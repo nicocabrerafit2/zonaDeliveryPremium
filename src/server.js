@@ -8,13 +8,15 @@ import dotenv from "dotenv";
 dotenv.config();
 const PORT = process.env.PORT;
 const app = express();
-// Servir archivos estáticos desde /public
-app.use(express.static('public'));
+
+
 
 // Necesario para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Servir archivos estáticos desde /public
+app.use(express.static(path.join(__dirname, 'public')));
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_STRING, { dbName: process.env.DB }).then(() => console.log("✅ Conectado a MongoDB"))
   .catch(err => console.error("❌ Error de conexión:", err));

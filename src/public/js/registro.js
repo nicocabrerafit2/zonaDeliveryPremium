@@ -1,4 +1,8 @@
 // Mostrar formulario según tipo de usuario
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("registro.js cargado correctamente");
+});
+console.log("registro.js cargado correctamente");
 function mostrarFormulario(tipo) {
   const formNegocio = document.getElementById('formNegocio');
   const formDelivery = document.getElementById('formDelivery');

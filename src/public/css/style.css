@@ -30,3 +30,7 @@ input, button {
 
 button {
   background-color: #007BFF;}
+  
+.hidden {
+  display: none;
+}
