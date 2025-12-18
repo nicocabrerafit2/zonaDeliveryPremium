@@ -8,6 +8,8 @@ import dotenv from "dotenv";
 dotenv.config();
 const PORT = process.env.PORT;
 const app = express();
+// Servir archivos estáticos desde /public
+app.use(express.static('public'));
 
 // Necesario para __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);

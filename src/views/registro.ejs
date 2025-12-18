@@ -1,14 +1,90 @@
+<%- include('partials/header', { title: 'Registro' }) %>
+
 <h2>Registro</h2>
-<form method="POST" action="/registro" enctype="multipart/form-data">
-  <input type="email" name="email" placeholder="Email" required /><br>
-  <input type="tel" name="celular" placeholder="Celular" required /><br>
-  <input type="text" name="nombre" placeholder="Nombre" required /><br>
-  <input type="text" name="apellido" placeholder="Apellido" required /><br>
-  <input type="text" name="dni" placeholder="DNI" required /><br>
-  <input type="text" name="negocioNombre" placeholder="Nombre del negocio" required /><br>
-  <input type="file" name="negocioLogo" accept="image/*" /><br>
-  <input type="text" name="negocioDireccion" placeholder="Dirección del negocio" required /><br>
-  <input type="text" name="negocioRubro" placeholder="Rubro del negocio" required /><br>
-  <input type="password" name="password" placeholder="Contraseña" required /><br>
+
+<form id="registroForm" method="POST" action="/registro" enctype="multipart/form-data">
+  <!-- Selector de tipo de usuario -->
+  <label>
+    <input type="radio" name="tipoUsuario" value="negocio" onclick="mostrarFormulario('negocio')" required>
+    Soy un negocio
+  </label>
+  <label>
+    <input type="radio" name="tipoUsuario" value="delivery" onclick="mostrarFormulario('delivery')" required>
+    Soy un delivery
+  </label>
+
+  <!-- Campos comunes -->
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" placeholder="Email" required />
+
+  <label for="password">Contraseña</label>
+  <input type="password" id="password" name="password" placeholder="Contraseña" required minlength="8" />
+  <small>Debe tener al menos 8 caracteres, una mayúscula y un número.</small>
+
+  <!-- Formulario negocio -->
+  <div id="formNegocio" class="hidden">
+    <label for="celular">Celular</label>
+    <input type="tel" id="celular" name="celular" placeholder="Celular" />
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+
+    <label for="apellido">Apellido</label>
+    <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
+
+    <label for="dni">DNI</label>
+    <input type="text" id="dni" name="dni" placeholder="DNI" pattern="[0-9]{7,8}" title="Debe contener 7 u 8 dígitos numéricos" />
+
+    <label for="negocioNombre">Nombre del negocio</label>
+    <input type="text" id="negocioNombre" name="negocioNombre" placeholder="Nombre del negocio" />
+
+    <label for="negocioLogo">Logo del negocio (imagen JPG o PNG)</label>
+    <input type="file" id="negocioLogo" name="negocioLogo" accept="image/*" />
+    <small>Sube una imagen clara del logo en formato JPG o PNG.</small>
+
+    <label for="negocioDireccion">Dirección del negocio</label>
+    <input type="text" id="negocioDireccion" name="negocioDireccion" placeholder="Dirección del negocio" />
+
+    <label for="negocioRubro">Rubro del negocio</label>
+    <input type="text" id="negocioRubro" name="negocioRubro" placeholder="Rubro del negocio" />
+  </div>
+
+  <!-- Formulario delivery -->
+  <div id="formDelivery" class="hidden">
+    <label for="nombreDelivery">Nombre</label>
+    <input type="text" id="nombreDelivery" name="nombre" placeholder="Nombre" />
+
+    <label for="apellidoDelivery">Apellido</label>
+    <input type="text" id="apellidoDelivery" name="apellido" placeholder="Apellido" />
+
+    <label for="dniDelivery">DNI</label>
+    <input type="text" id="dniDelivery" name="dni" placeholder="DNI" pattern="[0-9]{7,8}" title="Debe contener 7 u 8 dígitos numéricos" />
+
+    <label for="celularDelivery">Celular</label>
+    <input type="tel" id="celularDelivery" name="celular" placeholder="Celular" />
+
+    <label for="vehiculoTipo">Tipo de vehículo/moto</label>
+    <input type="text" id="vehiculoTipo" name="vehiculoTipo" placeholder="Ej: Moto, Auto, Bicicleta" />
+
+    <label for="vehiculoPatente">Patente</label>
+    <input type="text" id="vehiculoPatente" name="vehiculoPatente" placeholder="Ej: ABC123" pattern="[A-Z]{3}[0-9]{3}" title="Formato ABC123" />
+
+    <label for="vehiculoColor">Color</label>
+    <input type="text" id="vehiculoColor" name="vehiculoColor" placeholder="Color del vehículo" />
+
+    <label for="vehiculoModelo">Modelo</label>
+    <input type="text" id="vehiculoModelo" name="vehiculoModelo" placeholder="Modelo del vehículo" />
+
+    <label for="seguro">Seguro del vehículo (PDF o imagen)</label>
+    <input type="file" id="seguro" name="seguro" accept="image/*,.pdf" />
+    <small>Sube el comprobante del seguro en formato PDF o imagen escaneada.</small>
+
+    <label for="permisoConducir">Permiso de conducir (PDF o imagen)</label>
+    <input type="file" id="permisoConducir" name="permisoConducir" accept="image/*,.pdf" />
+    <small>Sube tu licencia de conducir en formato PDF o imagen escaneada.</small>
+  </div>
+
   <button type="submit">Registrar</button>
 </form>
+
+<%- include('partials/footer') %>
