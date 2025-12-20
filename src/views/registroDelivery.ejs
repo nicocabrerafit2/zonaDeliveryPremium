@@ -1,0 +1,54 @@
+<%- include('partials/header', { title: title }) %>
+
+<h2>Registro Delivery</h2>
+
+<% if (error) { %>
+  <div class="error"><%= error %></div>
+<% } %>
+
+<form id="registroForm" method="POST" action="/registro/delivery" enctype="multipart/form-data">
+  <!-- Campos comunes -->
+  <label>Email</label>
+  <input type="email" name="email" value="<%= formData.email || '' %>" required>
+
+  <label>Contraseña</label>
+  <input type="password" name="password" required minlength="8">
+
+  <!-- Datos personales -->
+  <label>Nombre</label>
+  <input type="text" name="nombreDelivery" value="<%= formData.nombreDelivery || '' %>" required>
+
+  <label>Apellido</label>
+  <input type="text" name="apellidoDelivery" value="<%= formData.apellidoDelivery || '' %>" required>
+
+  <label>Celular</label>
+  <input type="tel" name="celularDelivery" value="<%= formData.celularDelivery || '' %>" required>
+
+  <label>DNI</label>
+  <input type="text" name="dniDelivery" value="<%= formData.dniDelivery || '' %>" required>
+
+  <!-- Datos del vehículo -->
+  <label>Tipo de vehículo</label>
+  <input type="text" name="vehiculoTipo" value="<%= formData.vehiculoTipo || '' %>">
+
+  <label>Patente</label>
+  <input type="text" name="vehiculoPatente" value="<%= formData.vehiculoPatente || '' %>">
+
+  <label>Color</label>
+  <input type="text" name="vehiculoColor" value="<%= formData.vehiculoColor || '' %>">
+
+  <label>Modelo</label>
+  <input type="text" name="vehiculoModelo" value="<%= formData.vehiculoModelo || '' %>">
+
+  <!-- Archivos obligatorios -->
+  <label>Seguro</label>
+  <input type="file" name="seguro" accept="image/*,.pdf" required>
+
+  <label>Permiso de conducir</label>
+  <input type="file" name="permisoConducir" accept="image/*,.pdf" required>
+
+  <button type="submit">Registrar</button>
+</form>
+
+<%- include('partials/footer') %>
+<script src="/js/registro.js"></script>

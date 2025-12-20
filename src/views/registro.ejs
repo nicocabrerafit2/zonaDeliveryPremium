@@ -2,90 +2,104 @@
 
 <h2>Registro</h2>
 
+<% if (typeof error !== 'undefined') { %>
+  <div class="error"><%= error %></div>
+<% } %>
+
 <form id="registroForm" method="POST" action="/registro" enctype="multipart/form-data">
   <!-- Selector de tipo de usuario -->
-  <label>
-    <input type="radio" name="tipoUsuario" value="negocio" onclick="mostrarFormulario('negocio')" required>
-    Soy un negocio
-  </label>
-  <label>
-    <input type="radio" name="tipoUsuario" value="delivery" onclick="mostrarFormulario('delivery')" required>
-    Soy un delivery
-  </label>
+  <% if (tipoUsuario === 'negocio') { %>
+  <!-- formulario negocio -->
+<% } else if (tipoUsuario === 'delivery') { %>
+  <!-- formulario delivery -->
+<% } %>
 
   <!-- Campos comunes -->
   <label for="email">Email</label>
-  <input type="email" id="email" name="email" placeholder="Email" required />
+  <input type="email" id="email" name="email"
+    value="<%= formData ? formData.email : '' %>" required />
 
   <label for="password">Contraseña</label>
-  <input type="password" id="password" name="password" placeholder="Contraseña" required minlength="8" />
-  <small>Debe tener al menos 8 caracteres, una mayúscula y un número.</small>
+  <input type="password" id="password" name="password"
+    placeholder="Contraseña" required minlength="8" />
 
   <!-- Formulario negocio -->
   <div id="formNegocio" class="hidden">
-    <label for="celular">Celular</label>
-    <input type="tel" id="celular" name="celular" placeholder="Celular" />
+    <label>Nombre</label>
+    <input type="text" id="nombreNegocio" name="nombreNegocio"
+      value="<%= formData ? formData.nombreNegocio : '' %>">
 
-    <label for="nombre">Nombre</label>
-    <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+    <label>Apellido</label>
+    <input type="text" id="apellidoNegocio" name="apellidoNegocio"
+      value="<%= formData ? formData.apellidoNegocio : '' %>">
 
-    <label for="apellido">Apellido</label>
-    <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
+    <label>Celular</label>
+    <input type="tel" id="celularNegocio" name="celularNegocio"
+      value="<%= formData ? formData.celularNegocio : '' %>">
 
-    <label for="dni">DNI</label>
-    <input type="text" id="dni" name="dni" placeholder="DNI" pattern="[0-9]{7,8}" title="Debe contener 7 u 8 dígitos numéricos" />
+    <label>DNI</label>
+    <input type="text" id="dniNegocio" name="dniNegocio"
+      value="<%= formData ? formData.dniNegocio : '' %>">
 
-    <label for="negocioNombre">Nombre del negocio</label>
-    <input type="text" id="negocioNombre" name="negocioNombre" placeholder="Nombre del negocio" />
+    <label>Nombre del negocio</label>
+    <input type="text" id="negocioNombre" name="negocioNombre"
+      value="<%= formData ? formData.negocioNombre : '' %>">
 
-    <label for="negocioLogo">Logo del negocio (imagen JPG o PNG)</label>
-    <input type="file" id="negocioLogo" name="negocioLogo" accept="image/*" />
-    <small>Sube una imagen clara del logo en formato JPG o PNG.</small>
+    <label>Logo del negocio</label>
+    <input type="file" id="negocioLogo" name="negocioLogo" accept="image/*">
 
-    <label for="negocioDireccion">Dirección del negocio</label>
-    <input type="text" id="negocioDireccion" name="negocioDireccion" placeholder="Dirección del negocio" />
+    <label>Dirección</label>
+    <input type="text" id="negocioDireccion" name="negocioDireccion"
+      value="<%= formData ? formData.negocioDireccion : '' %>">
 
-    <label for="negocioRubro">Rubro del negocio</label>
-    <input type="text" id="negocioRubro" name="negocioRubro" placeholder="Rubro del negocio" />
+    <label>Rubro</label>
+    <input type="text" id="negocioRubro" name="negocioRubro"
+      value="<%= formData ? formData.negocioRubro : '' %>">
   </div>
 
   <!-- Formulario delivery -->
   <div id="formDelivery" class="hidden">
-    <label for="nombreDelivery">Nombre</label>
-    <input type="text" id="nombreDelivery" name="nombre" placeholder="Nombre" />
+    <label>Nombre</label>
+    <input type="text" id="nombreDelivery" name="nombreDelivery"
+      value="<%= formData ? formData.nombreDelivery : '' %>">
 
-    <label for="apellidoDelivery">Apellido</label>
-    <input type="text" id="apellidoDelivery" name="apellido" placeholder="Apellido" />
+    <label>Apellido</label>
+    <input type="text" id="apellidoDelivery" name="apellidoDelivery"
+      value="<%= formData ? formData.apellidoDelivery : '' %>">
 
-    <label for="dniDelivery">DNI</label>
-    <input type="text" id="dniDelivery" name="dni" placeholder="DNI" pattern="[0-9]{7,8}" title="Debe contener 7 u 8 dígitos numéricos" />
+    <label>Celular</label>
+    <input type="tel" id="celularDelivery" name="celularDelivery"
+      value="<%= formData ? formData.celularDelivery : '' %>">
 
-    <label for="celularDelivery">Celular</label>
-    <input type="tel" id="celularDelivery" name="celular" placeholder="Celular" />
+    <label>DNI</label>
+    <input type="text" id="dniDelivery" name="dniDelivery"
+      value="<%= formData ? formData.dniDelivery : '' %>">
 
-    <label for="vehiculoTipo">Tipo de vehículo/moto</label>
-    <input type="text" id="vehiculoTipo" name="vehiculoTipo" placeholder="Ej: Moto, Auto, Bicicleta" />
+    <label>Tipo de vehículo</label>
+    <input type="text" id="vehiculoTipo" name="vehiculoTipo"
+      value="<%= formData ? formData.vehiculoTipo : '' %>">
 
-    <label for="vehiculoPatente">Patente</label>
-    <input type="text" id="vehiculoPatente" name="vehiculoPatente" placeholder="Ej: ABC123" pattern="[A-Z]{3}[0-9]{3}" title="Formato ABC123" />
+    <label>Patente</label>
+    <input type="text" id="vehiculoPatente" name="vehiculoPatente"
+      value="<%= formData ? formData.vehiculoPatente : '' %>">
 
-    <label for="vehiculoColor">Color</label>
-    <input type="text" id="vehiculoColor" name="vehiculoColor" placeholder="Color del vehículo" />
+    <label>Color</label>
+    <input type="text" id="vehiculoColor" name="vehiculoColor"
+      value="<%= formData ? formData.vehiculoColor : '' %>">
 
-    <label for="vehiculoModelo">Modelo</label>
-    <input type="text" id="vehiculoModelo" name="vehiculoModelo" placeholder="Modelo del vehículo" />
+    <label>Modelo</label>
+    <input type="text" id="vehiculoModelo" name="vehiculoModelo"
+      value="<%= formData ? formData.vehiculoModelo : '' %>">
 
-    <label for="seguro">Seguro del vehículo (PDF o imagen)</label>
-    <input type="file" id="seguro" name="seguro" accept="image/*,.pdf" />
-    <small>Sube el comprobante del seguro en formato PDF o imagen escaneada.</small>
+    <label>Seguro</label>
+    <input type="file" id="seguro" name="seguro" accept="image/*,.pdf">
 
-    <label for="permisoConducir">Permiso de conducir (PDF o imagen)</label>
-    <input type="file" id="permisoConducir" name="permisoConducir" accept="image/*,.pdf" />
-    <small>Sube tu licencia de conducir en formato PDF o imagen escaneada.</small>
+    <label>Permiso de conducir</label>
+    <input type="file" id="permisoConducir" name="permisoConducir" accept="image/*,.pdf">
   </div>
 
   <button type="submit">Registrar</button>
-
 </form>
 
 <%- include('partials/footer') %>
+<script src="/js/registro.js"></script>

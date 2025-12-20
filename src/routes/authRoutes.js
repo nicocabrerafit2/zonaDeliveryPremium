@@ -1,13 +1,29 @@
-import { Router } from 'express';
+import express from 'express';
 import multer from 'multer';
-import { registerForm, register,home,loginForm,login } from '../controllers/authController.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import {
+  loginForm,
+  login
+} from '../controllers/loginController.js';
+import {
+  chooseType,
+  registerNegocioForm,
+  registerDeliveryForm,
+  registerNegocio,
+  registerDelivery
+} from '../controllers/registerController.js';
 
-const router = Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Configuración de Multer (subida de imágenes)
+const router = express.Router();
+
+// Multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // carpeta donde se guardan las imágenes
+    cb(null, path.join(__dirname, '../../uploads'));
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -15,10 +31,27 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// Rutas
-router.get('/', home);
-router.get('/registro', registerForm);
-router.post('/registro', upload.single('negocioLogo'), register);
+// Página intermedia
+router.get('/registro/tipo', chooseType);
+
+// Negocio
+router.get('/registro/negocio', registerNegocioForm);
+router.post('/registro/negocio',
+  upload.fields([{ name: 'negocioLogo', maxCount: 1 }]),
+  registerNegocio
+);
+
+// Delivery
+router.get('/registro/delivery', registerDeliveryForm);
+router.post('/registro/delivery',
+  upload.fields([
+    { name: 'seguro', maxCount: 1 },
+    { name: 'permisoConducir', maxCount: 1 }
+  ]),
+  registerDelivery
+);
+
+// Login
 router.get('/login', loginForm);
 router.post('/login', login);
 

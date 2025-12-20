@@ -1,0 +1,44 @@
+<%- include('partials/header', { title: title }) %>
+
+<h2>Registro Negocio</h2>
+
+<% if (error) { %>
+  <div class="error"><%= error %></div>
+<% } %>
+
+<form id="registroForm" method="POST" action="/registro/negocio" enctype="multipart/form-data">
+  <label>Email</label>
+  <input type="email" name="email" value="<%= formData.email || '' %>" required>
+
+  <label>Contraseña</label>
+  <input type="password" name="password" required minlength="8">
+
+  <label>Nombre</label>
+  <input type="text" name="nombreNegocio" value="<%= formData.nombreNegocio || '' %>" required>
+
+  <label>Apellido</label>
+  <input type="text" name="apellidoNegocio" value="<%= formData.apellidoNegocio || '' %>" required>
+
+  <label>Celular</label>
+  <input type="tel" name="celularNegocio" value="<%= formData.celularNegocio || '' %>" required>
+
+  <label>DNI</label>
+  <input type="text" name="dniNegocio" value="<%= formData.dniNegocio || '' %>" required>
+
+  <label>Nombre del negocio</label>
+  <input type="text" name="negocioNombre" value="<%= formData.negocioNombre || '' %>" required>
+
+  <label>Logo del negocio</label>
+  <input type="file" name="negocioLogo" accept="image/*" required>
+
+  <label>Dirección</label>
+  <input type="text" name="negocioDireccion" value="<%= formData.negocioDireccion || '' %>" required>
+
+  <label>Rubro</label>
+  <input type="text" name="negocioRubro" value="<%= formData.negocioRubro || '' %>" required>
+
+  <button type="submit">Registrar</button>
+</form>
+
+<%- include('partials/footer') %>
+<script src="/js/registro.js"></script>
