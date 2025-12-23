@@ -36,20 +36,49 @@ export const registerNegocio = async (req, res) => {
     if (!email || !emailRegex.test(email)) {
       return res.status(400).render('registroNegocio', {
         title: 'Registro Negocio',
-        error: 'El email no tiene un formato válido',
+        error: 'El email no tiene un formato válido o se encuentra vacío',
         formData: req.body
       });
     }
 
     // Validación de campos obligatorios
     if (!password || !nombreNegocio || !apellidoNegocio || !celularNegocio || !dniNegocio || !negocioNombre || !negocioDireccion || !negocioRubro) {
+
+      
       return res.status(400).render('registroNegocio', {
         title: 'Registro Negocio',
         error: 'Todos los campos son obligatorios',
         formData: req.body
       });
     }
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
+if (!passwordRegex.test(password)) {
+  return res.status(400).render('registroNegocio', {
+    title: 'Registro Negocio',
+    error: 'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos.',
+    formData: req.body
+  });
+}
+// Validación de DNI
+const dniRegex = /^\d{7,8}$/;
+
+if (!dniRegex.test(dniNegocio)) {
+  return res.status(400).render('registroNegocio', {
+    title: 'Registro Negocio',
+    error: 'El DNI debe contener solo números y tener entre 7 y 8 dígitos.',
+    formData: req.body
+  });
+}
+      const celularRegex = /^\+?\d{10,13}$/;
+
+if (!celularRegex.test(celularNegocio)) {
+  return res.status(400).render('registroNegocio', {
+    title: 'Registro Negocio',
+    error: 'El número de celular debe contener entre 10 y 13 dígitos y puede incluir + al inicio.',
+    formData: req.body
+  });
+}
     // Validación de archivo
     if (!req.files?.negocioLogo) {
       return res.status(400).render('registroNegocio', {
@@ -120,13 +149,41 @@ export const registerDelivery = async (req, res) => {
 
     // Validación de campos obligatorios
     if (!password || !nombreDelivery || !apellidoDelivery || !celularDelivery || !dniDelivery) {
-      return res.status(400).render('registroDelivery', {
+   
+ return res.status(400).render('registroDelivery', {
         title: 'Registro Delivery',
         error: 'Todos los campos son obligatorios',
         formData: req.body
       });
     }
+    // Validación de DNI
+const dniRegex = /^\d{7,8}$/;
 
+if (!dniRegex.test(dniDelivery)) {
+  return res.status(400).render('registroDelivery', {
+    title: 'Registro Delivery',
+    error: 'El DNI debe contener solo números y tener entre 7 y 8 dígitos.',
+    formData: req.body
+  });
+}
+       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+if (!passwordRegex.test(password)) {
+  return res.status(400).render('registroDelivery', {
+    title: 'Registro Delivery',
+    error: 'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos.',
+    formData: req.body
+  });
+}
+      const celularRegex = /^\+?\d{10,13}$/;
+
+if (!celularRegex.test(celularDelivery)) {
+  return res.status(400).render('registroDelivery', {
+    title: 'Registro Delivery',
+    error: 'El número de celular debe contener entre 10 y 13 dígitos y puede incluir + al inicio.',
+    formData: req.body
+  });
+}
     // Validación de archivos
     if (!req.files?.seguro || !req.files?.permisoConducir) {
       return res.status(400).render('registroDelivery', {
@@ -168,6 +225,14 @@ export const registerDelivery = async (req, res) => {
     res.send(`Delivery ${nombreDelivery} registrado con éxito`);
   } catch (error) {
     console.error('Error en registro delivery:', error);
+    if (error.code === 11000 && error.keyPattern?.email) {
+    return res.status(400).render('error', {
+      title: 'Error',
+      message: 'El email ya está registrado. Por favor usa otro.',
+      detail: process.env.NODE_ENV === 'development' ? error.message : null
+    });
+  }
+
     res.status(500).render('error', {
       title: 'Error',
       message: 'Ocurrió un problema al registrar delivery.',
